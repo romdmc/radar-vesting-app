@@ -1,0 +1,41 @@
+{
+  "CAKE": [
+    { "timestamp": "2025-08-08T00:00:00Z", "price": 4.80 },
+    { "timestamp": "2025-08-09T00:00:00Z", "price": 4.85 },
+    { "timestamp": "2025-08-10T00:00:00Z", "price": 4.90 },
+    { "timestamp": "2025-08-11T00:00:00Z", "price": 5.00 },
+    { "timestamp": "2025-08-12T00:00:00Z", "price": 5.10 },
+    { "timestamp": "2025-08-13T00:00:00Z", "price": 5.05 },
+    { "timestamp": "2025-08-14T00:00:00Z", "price": 5.00 },
+    { "timestamp": "2025-08-15T00:00:00Z", "price": 4.95 },
+    { "timestamp": "2025-08-16T00:00:00Z", "price": 4.90 },
+    { "timestamp": "2025-08-17T00:00:00Z", "price": 4.85 },
+    { "timestamp": "2025-08-18T00:00:00Z", "price": 4.90 }
+  ],
+  "BNB": [
+    { "timestamp": "2025-08-08T00:00:00Z", "price": 300.0 },
+    { "timestamp": "2025-08-09T00:00:00Z", "price": 305.0 },
+    { "timestamp": "2025-08-10T00:00:00Z", "price": 310.0 },
+    { "timestamp": "2025-08-11T00:00:00Z", "price": 320.0 },
+    { "timestamp": "2025-08-12T00:00:00Z", "price": 315.0 },
+    { "timestamp": "2025-08-13T00:00:00Z", "price": 318.0 },
+    { "timestamp": "2025-08-14T00:00:00Z", "price": 317.0 },
+    { "timestamp": "2025-08-15T00:00:00Z", "price": 316.0 },
+    { "timestamp": "2025-08-16T00:00:00Z", "price": 315.0 },
+    { "timestamp": "2025-08-17T00:00:00Z", "price": 314.0 },
+    { "timestamp": "2025-08-18T00:00:00Z", "price": 313.0 }
+  ],
+  "UNI": [
+    { "timestamp": "2025-08-08T00:00:00Z", "price": 6.50 },
+    { "timestamp": "2025-08-09T00:00:00Z", "price": 6.55 },
+    { "timestamp": "2025-08-10T00:00:00Z", "price": 6.60 },
+    { "timestamp": "2025-08-11T00:00:00Z", "price": 6.58 },
+    { "timestamp": "2025-08-12T00:00:00Z", "price": 6.57 },
+    { "timestamp": "2025-08-13T00:00:00Z", "price": 6.60 },
+    { "timestamp": "2025-08-14T00:00:00Z", "price": 6.65 },
+    { "timestamp": "2025-08-15T00:00:00Z", "price": 6.70 },
+    { "timestamp": "2025-08-16T00:00:00Z", "price": 6.75 },
+    { "timestamp": "2025-08-17T00:00:00Z", "price": 6.80 },
+    { "timestamp": "2025-08-18T00:00:00Z", "price": 6.85 }
+  ]
+}
