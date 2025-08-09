@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Radar Vesting</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+        line-height: 1.4;
+      }
+      #unlocks {
+        margin-top: 1rem;
+      }
+      .unlock-item {
+        border: 1px solid #ddd;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Radar Vesting</h1>
+    <p>
+      Cette interface présente un tableau de bord pour suivre les déblocages de jetons
+      (token unlocks), lister ceux qui sont shortables et tester une stratégie simple.
+      Les données utilisées sont de démonstration et stockées localement.
+    </p>
+
+    <section>
+      <h2>Prochains débloquages</h2>
+      <button id="loadUnlocks">Charger les unlocks</button>
+      <div id="unlocks"></div>
+    </section>
+
+    <section>
+      <h2>Tokens shortables</h2>
+      <button id="loadShort">Charger les tokens shortables</button>
+      <div id="shortables"></div>
+    </section>
+
+    <section>
+      <h2>Backtester la stratégie</h2>
+      <form id="backtestForm">
+        <label>
+          Token :
+          <select id="btToken"></select>
+        </label>
+        <br />
+        <label>
+          Heures avant l'unlock :
+          <input type="number" id="btBefore" value="6" min="0" />
+        </label>
+        <br />
+        <label>
+          Heures après l'unlock :
+          <input type="number" id="btAfter" value="6" min="0" />
+        </label>
+        <br />
+        <button type="submit">Lancer le backtest</button>
+      </form>
+      <div id="backtestResult"></div>
+    </section>
+
+    <section>
+      <h2>Connexion au wallet</h2>
+      <button id="connectWallet">Connecter le wallet</button>
+      <p id="walletStatus"></p>
+    </section>
+
+    <script>
+      // Afficher la liste des prochains unlocks
+      function displayUnlocks(data) {
+        const container = document.getElementById('unlocks');
+        container.innerHTML = '';
+        data.forEach((item) => {
+          const div = document.createElement('div');
+          div.className = 'unlock-item';
+          div.innerHTML = `<strong>${item.token}</strong> — Unlock le ${new Date(item.timestamp).toLocaleString()}<br />Montant : ${item.amountUsd.toLocaleString('fr-FR',{style:'currency', currency:'USD'})} | Shortable : ${item.shortable}`;
+          container.appendChild(div);
+        });
+      }
+
+      // Charger et afficher les unlocks
+      document.getElementById('loadUnlocks').addEventListener('click', () => {
+        fetch('/api/unlocks')
+          .then((res) => res.json())
+          .then((data) => {
+            displayUnlocks(data);
+            // Mettre à jour la liste de tokens pour le backtest
+            const select = document.getElementById('btToken');
+            select.innerHTML = '';
+            const tokens = Array.from(new Set(data.map((d) => d.token)));
+            tokens.forEach((tok) => {
+              const opt = document.createElement('option');
+              opt.value = tok;
+              opt.textContent = tok;
+              select.appendChild(opt);
+            });
+          })
+          .catch((err) => {
+            console.error('Erreur lors du chargement des unlocks :', err);
+          });
+      });
+
+      // Charger et afficher les tokens shortables
+      document.getElementById('loadShort').addEventListener('click', () => {
+        fetch('/api/shortable')
+          .then((res) => res.json())
+          .then((data) => {
+            const container = document.getElementById('shortables');
+            container.innerHTML = '';
+            if (data.length === 0) {
+              container.textContent = 'Aucun token shortable.';
+            } else {
+              data.forEach((tok) => {
+                const div = document.createElement('div');
+                div.textContent = tok;
+                container.appendChild(div);
+              });
+            }
+          })
+          .catch((err) => {
+            console.error('Erreur lors du chargement des tokens shortables :', err);
+          });
+      });
+
+      // Gérer le formulaire de backtest
+      document.getElementById('backtestForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const token = document.getElementById('btToken').value;
+        const hoursBefore = Number(document.getElementById('btBefore').value);
+        const hoursAfter = Number(document.getElementById('btAfter').value);
+        fetch('/api/backtest', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token, hoursBefore, hoursAfter }),
+        })
+          .then((res) => res.json())
+          .then((result) => {
+            const resDiv = document.getElementById('backtestResult');
+            resDiv.innerHTML = '';
+            const { trades, winRate, avgRoi } = result;
+            if (trades === 0) {
+              resDiv.textContent = 'Pas de trades possibles sur cet intervalle.';
+            } else {
+              resDiv.innerHTML = `<strong>Backtest terminé</strong><br />Nombre de trades : ${trades}<br />Taux de réussite : ${(winRate * 100).toFixed(1)} %<br />ROI moyen : ${(avgRoi * 100).toFixed(2)} %`;
+            }
+          })
+          .catch((err) => {
+            console.error('Erreur lors du backtest :', err);
+          });
+      });
+
+      // Simuler la connexion au wallet
+      document.getElementById('connectWallet').addEventListener('click', () => {
+        const status = document.getElementById('walletStatus');
+        // Simulation : on affiche simplement un message
+        status.textContent = 'Wallet connecté (simulation)';
+      });
+    </script>
+  </body>
+</html>
