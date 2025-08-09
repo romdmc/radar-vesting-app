@@ -7,94 +7,68 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        background-color: #f7f7f7;
-        margin: 0;
-        padding: 20px;
+        margin: 2rem;
         line-height: 1.4;
-      }
-      .container {
-        max-width: 900px;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
       #unlocks {
         margin-top: 1rem;
       }
       .unlock-item {
         border: 1px solid #ddd;
-        padding: 0.75rem 1rem;
-        margin-bottom: 0.75rem;
-        border-radius: 6px;
-        background-color: #f9f9f9;
-      }
-      button {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 8px 16px;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
         border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        margin-top: 0.5rem;
-      }
-      button:hover {
-        background-color: #0056b3;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Radar Vesting</h1>
-      <p>
-        Cette interface présente un tableau de bord pour suivre les déblocages de jetons
-        (token unlocks), lister ceux qui sont shortables et tester une stratégie simple.
-        Les données utilisées sont de démonstration et stockées localement.
-      </p>
+    <h1>Radar Vesting</h1>
+    <p>
+      Cette interface présente un tableau de bord pour suivre les déblocages de jetons
+      (token unlocks), lister ceux qui sont shortables et tester une stratégie simple.
+      Les données sont récupérées en temps réel via l’API DropsTab (ou locales si aucune clé API n’est fournie).
+    </p>
 
-      <section>
-        <h2>Prochains débloquages</h2>
-        <button id="loadUnlocks">Charger les unlocks</button>
-        <div id="unlocks"></div>
-      </section>
+    <section>
+      <h2>Prochains débloquages</h2>
+      <button id="loadUnlocks">Charger les unlocks</button>
+      <div id="unlocks"></div>
+    </section>
 
-      <section>
-        <h2>Tokens shortables</h2>
-        <button id="loadShort">Charger les tokens shortables</button>
-        <div id="shortables"></div>
-      </section>
+    <section>
+      <h2>Tokens shortables</h2>
+      <button id="loadShort">Charger les tokens shortables</button>
+      <div id="shortables"></div>
+    </section>
 
-      <section>
-        <h2>Backtester la stratégie</h2>
-        <form id="backtestForm">
-          <label>
-            Token :
-            <select id="btToken"></select>
-          </label>
-          <br />
-          <label>
-            Heures avant l'unlock :
-            <input type="number" id="btBefore" value="6" min="0" />
-          </label>
-          <br />
-          <label>
-            Heures après l'unlock :
-            <input type="number" id="btAfter" value="6" min="0" />
-          </label>
-          <br />
-          <button type="submit">Lancer le backtest</button>
-        </form>
-        <div id="backtestResult"></div>
-      </section>
+    <section>
+      <h2>Backtester la stratégie</h2>
+      <form id="backtestForm">
+        <label>
+          Token :
+          <select id="btToken"></select>
+        </label>
+        <br />
+        <label>
+          Heures avant l'unlock :
+          <input type="number" id="btBefore" value="6" min="0" />
+        </label>
+        <br />
+        <label>
+          Heures après l'unlock :
+          <input type="number" id="btAfter" value="6" min="0" />
+        </label>
+        <br />
+        <button type="submit">Lancer le backtest</button>
+      </form>
+      <div id="backtestResult"></div>
+    </section>
 
-      <section>
-        <h2>Connexion au wallet</h2>
-        <button id="connectWallet">Connecter le wallet</button>
-        <p id="walletStatus"></p>
-      </section>
-    </div>
+    <section>
+      <h2>Connexion au wallet</h2>
+      <button id="connectWallet">Connecter le wallet</button>
+      <p id="walletStatus"></p>
+    </section>
 
     <script>
       // Afficher la liste des prochains unlocks
