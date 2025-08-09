@@ -1,0 +1,20 @@
+[
+  {
+    "token": "CAKE",
+    "timestamp": "2025-08-15T12:00:00Z",
+    "amountUsd": 5000000,
+    "shortable": true
+  },
+  {
+    "token": "BNB",
+    "timestamp": "2025-08-18T15:00:00Z",
+    "amountUsd": 2000000,
+    "shortable": true
+  },
+  {
+    "token": "UNI",
+    "timestamp": "2025-08-20T09:00:00Z",
+    "amountUsd": 3500000,
+    "shortable": false
+  }
+]
